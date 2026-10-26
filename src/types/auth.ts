@@ -42,7 +42,7 @@ export interface resetPasswordPayload {
   newPassword: string;
 }
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T = null> {
   success: boolean;
   message: string;
   data: T;
