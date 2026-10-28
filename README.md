@@ -24,9 +24,9 @@ You can start check out the Forms at
 
 ## Form
 
-[http://localhost:3000/login]
-[http://localhost:3000/register]
-[http://localhost:3000/forgot-password]
+[http://localhost:3000/login](http://localhost:3000/login)
+[http://localhost:3000/register](http://localhost:3000/register)
+[http://localhost:3000/forgot-password](http://localhost:3000/forgot-password)
 
 ## Learn More
 
