@@ -5,8 +5,8 @@ import {
   loginPayload,
   registerPayload,
   forgotPasswordPayload,
-  resetPasswordPayload,
   ApiResponse,
+  ResetPasswordPayload,
 } from "@/types/auth";
 
 export const authService = {
@@ -53,8 +53,8 @@ export const authService = {
   },
 
   resetPassword: async (
-    payload: resetPasswordPayload,
-  ): Promise<ApiResponse> => {
+    payload: ResetPasswordPayload,
+  ): Promise<ApiResponse<unknown>> => {
     const { data } = await api.post("/auth/reset-password", payload);
     return data;
   },

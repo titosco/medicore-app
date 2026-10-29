@@ -21,10 +21,10 @@ export interface AuthResponse {
 }
 
 export interface registerPayload {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   password: string;
+  confirmPassword: string;
   role: Role;
 }
 
@@ -37,9 +37,10 @@ export interface forgotPasswordPayload {
   email: string;
 }
 
-export interface resetPasswordPayload {
+export interface ResetPasswordPayload {
   token: string;
   newPassword: string;
+  confirmPassword: string;
 }
 
 export interface ApiResponse<T = null> {

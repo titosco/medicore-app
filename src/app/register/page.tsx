@@ -10,13 +10,23 @@ import { authService } from "@/services/auth.service";
 import { Role } from "@/types/auth";
 import valueProcessor from "next/dist/build/webpack/loaders/resolve-url-loader/lib/value-processor";
 
-const registerSchema = z.object({
-  firstName: z.string().min(1, "First naem required"),
-  lastName: z.string().min(1, "Lastname Required"),
-  email: z.string().email("please emter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 charaters long"),
-  role: z.enum(["RECEPTIONIST", "DOCTOR", "PATIENT"]),
-});
+const registerSchema = z
+  .object({
+    name: z.string().min(2, "name required"),
+    email: z.string().email("please emter a valid email address"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Must contain at least one number")
+      .regex(/[^A-Za-z0-9]/, "Must contain at least one special character"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+    role: z.enum(["RECEPTIONIST", "DOCTOR", "PATIENT"]),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -42,7 +52,10 @@ export default function RegisterPage() {
       setIsLoading(true);
       setServerError("");
       const response = await authService.register({
-        ...values,
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
         role: values.role as Role,
       });
       if (response.success) {
@@ -115,39 +128,19 @@ export default function RegisterPage() {
         {/* form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* first and last name  */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                First Name
-              </label>
-              <input
-                {...register("firstName")}
-                type="text"
-                placeholder="john"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-              />
-              {errors.firstName && (
-                <p className="mt-1 text-xs text-red-700">
-                  {errors.firstName.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Last name
-              </label>
-              <input
-                {...register("lastName")}
-                type="text"
-                placeholder="Doe"
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-              />
-              {errors.lastName && (
-                <p className="mt-1 text-xs text-red-700">
-                  {errors.lastName.message}
-                </p>
-              )}
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Full name
+            </label>
+            <input
+              {...register("name")}
+              type="text"
+              placeholder="John Doe"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            />
+            {errors.name && (
+              <p className="mt-1 text-xs text-red-600">{errors.name.message}</p>
+            )}
           </div>
 
           {/* email */}
@@ -210,6 +203,26 @@ export default function RegisterPage() {
             {errors.password && (
               <p className="mt-1 text-xs text-red-700">
                 {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Confirm password
+            </label>
+            <div className="relative">
+              <input
+                {...register("confirmPassword")}
+                type={showPassword ? "text" : "password"}
+                placeholder="**************"
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition pr-10"
+              />
+            </div>
+            {errors.confirmPassword && (
+              <p className="mt-1 text-xs text-red-700">
+                {errors.confirmPassword.message}
               </p>
             )}
           </div>

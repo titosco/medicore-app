@@ -56,6 +56,7 @@ function ResetPasswordForm() {
       const response = await authService.resetPassword({
         token,
         newPassword: values.password,
+        confirmPassword: values.confirmPassword,
       });
       if (response.success) {
         setSuccess(true);
