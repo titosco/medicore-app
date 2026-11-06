@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAccessToken, setAccessToken } from "./tokenStore";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
@@ -10,7 +11,7 @@ const api = axios.create({
 
 // attach access token to every request automatically
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+  const token = getAccessToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,19 +23,20 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const original = error.config;
+    const isAuthRoute = original?.url?.startWith("/auth");
 
     // if 401 error and we have not retired yet - try to refresh
-    if (error.response?.status === 401 && !original._retry) {
+    if (error.response?.status === 401 && !original._retry && !isAuthRoute) {
       original.retry = true;
       try {
         const { data } = await api.post("/auth/refresh");
         const newToken = data.data.accessToken;
-        localStorage.setItem("accessToken", newToken);
+        setAccessToken(newToken);
         original.headers.Authorization = `Bearer ${newToken}`;
         return api(original);
       } catch {
         // refresh failed, redirct to the login
-        localStorage.removeItem("accessToken");
+        setAccessToken(null);
         window.location.href = "/login";
       }
     }

@@ -1,4 +1,5 @@
 import api from "@/lib/api";
+import { setAccessToken } from "@/lib/tokenStore";
 
 import {
   AuthResponse,
@@ -26,7 +27,7 @@ export const authService = {
     const { data } = await api.post("/auth/login", payload);
     // save access token into local storage
     if (data.data?.accessToken) {
-      localStorage.setItem("accessToken", data.data.accessToken);
+      setAccessToken(data.data.accessToken);
     }
     return data;
   },
@@ -34,14 +35,14 @@ export const authService = {
   refresh: async (): Promise<ApiResponse<{ accessToken: string }>> => {
     const { data } = await api.post("/auth/refresh");
     if (data.data?.accessToken) {
-      localStorage.setItem("accessToken", data.data.accessToken);
+      setAccessToken(data.data.accessToken);
     }
     return data;
   },
 
   logout: async (): Promise<ApiResponse> => {
     const { data } = await api.get("/auth/logout");
-    localStorage.removeItem("accessToken");
+    setAccessToken(null);
     return data;
   },
 

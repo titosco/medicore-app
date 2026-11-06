@@ -9,6 +9,9 @@ export interface User {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  patient?: Record<string, unknown> | null;
+  doctor?: Record<string, unknown> | null;
+  receptionist?: Record<string, unknown> | null;
 }
 
 export interface AuthResponse {
