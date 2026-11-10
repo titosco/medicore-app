@@ -28,6 +28,7 @@ export const authService = {
     // save access token into local storage
     if (data.data?.accessToken) {
       setAccessToken(data.data.accessToken);
+      localStorage.setItem("hasSession", "1");
     }
     return data;
   },
@@ -41,7 +42,7 @@ export const authService = {
   },
 
   logout: async (): Promise<ApiResponse> => {
-    const { data } = await api.get("/auth/logout");
+    const { data } = await api.post("/auth/logout");
     setAccessToken(null);
     return data;
   },

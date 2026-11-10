@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { authService } from "@/services/auth.service";
 
+import { useAuth } from "@/providers/AuthProvider";
+
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(1, "password is required"),
@@ -16,6 +18,8 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const { refreshUser } = useAuth();
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -37,6 +41,7 @@ export default function LoginPage() {
       setServerError("");
       const response = await authService.login(values);
       if (response.success) {
+        await refreshUser();
         router.push("/dashboard");
       }
     } catch (error: unknown) {

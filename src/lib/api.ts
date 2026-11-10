@@ -36,6 +36,7 @@ api.interceptors.response.use(
         return api(original);
       } catch {
         // refresh failed, redirct to the login
+        localStorage.removeItem("hasSession");
         setAccessToken(null);
         window.location.href = "/login";
       }
