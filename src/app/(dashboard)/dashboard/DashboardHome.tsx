@@ -25,53 +25,53 @@ interface Action {
 
 const content: Record<Role, { subtitle: string; actions: Action[] }> = {
   PATIENT: {
-    subtitle: "Manage your appointments and health records.",
+    subtitle: "Manage your Appointments and Health Records.",
     actions: [
       {
-        label: "Book an appointment",
-        description: "Find a doctor and book the time",
+        label: "Book an Appointment",
+        description: "Find a Doctor and book the time",
         href: "/appointments",
         icon: CalendarDays,
       },
       {
         label: "Prescription",
-        description: "View your current medication",
+        description: "View your Current Medication",
         href: "/presscriptions",
         icon: Pill,
       },
       {
         label: "Lab results",
-        description: "View your test results",
+        description: "View your Test Results",
         href: "/lab-results",
         icon: FlaskConical,
       },
     ],
   },
   DOCTOR: {
-    subtitle: "Check your schedule and patients ",
+    subtitle: "Check your Schedule and Patients ",
     actions: [
       {
-        label: "My schedule",
-        description: "Appointments for today and beyond",
+        label: "My Schedule",
+        description: "Appointments for Today and Beyond",
         href: "/appointments",
         icon: CalendarDays,
       },
       {
-        label: "Medical records",
-        description: "Write and review cinical records",
+        label: "Medical Records",
+        description: "Write and Review Cinical Records",
         href: "/medical-records",
         icon: FileText,
       },
       {
-        label: "Lab orders",
-        description: "order tests and view results",
+        label: "Lab Orders",
+        description: "Order Tests and view Results",
         href: "/lab-orders",
         icon: FlaskConical,
       },
     ],
   },
   RECEPTIONIST: {
-    subtitle: "Scheduling and managing front desk tools",
+    subtitle: "Scheduling and Managing Front Desk Tools",
     actions: [
       {
         label: "Appointments",
@@ -94,11 +94,11 @@ const content: Record<Role, { subtitle: string; actions: Action[] }> = {
     ],
   },
   ADMIN: {
-    subtitle: "Overall system administration and oversight",
+    subtitle: "Overall System Administration and Oversight",
     actions: [
       {
         label: "Users",
-        description: "Manage users and roles",
+        description: "Manage users and Roles",
         href: "/users",
         icon: Users,
       },
@@ -110,7 +110,7 @@ const content: Record<Role, { subtitle: string; actions: Action[] }> = {
       },
       {
         label: "Audit logs",
-        description: "Review access to sensitive data",
+        description: "Review Access to Sensitive Data",
         href: "/audit-logs",
         icon: ScrollText,
       },
@@ -128,7 +128,7 @@ export default function DashboardHome() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">
-          Welcome. {user.name}
+          Welcome, {user.name}
         </h1>
         <p className="text-gray-500 text-sm mt-1">{subtitle}</p>
       </div>
@@ -142,7 +142,7 @@ export default function DashboardHome() {
               href={a.href}
               className="bg-white p-5 rounded-xl border border-gray-300 hover:border-blue-400 hover:shadow-sm transition"
             >
-              <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center mb-3">
+              <div className="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center mb-3">
                 <Icon size={20} />
               </div>
               <p className="text-sm font-medium text-gray-900">{a.label}</p>

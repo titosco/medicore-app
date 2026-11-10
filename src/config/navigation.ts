@@ -22,16 +22,16 @@ export interface navItem {
 }
 
 const dashboard: navItem = {
-  label: "dashboard",
+  label: "Dashboard",
   href: "/dashboard",
   icon: LayoutDashboard,
 };
 const notifications: navItem = {
-  label: "notifications",
+  label: "Notifications",
   href: "/notification",
   icon: Bell,
 };
-const profile: navItem = { label: "profile", href: "/profile", icon: User };
+const profile: navItem = { label: "Profile", href: "/profile", icon: User };
 
 export const navByRole: Record<Role, navItem[]> = {
   PATIENT: [
