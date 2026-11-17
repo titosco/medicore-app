@@ -10,7 +10,6 @@ import {
   Users,
   Building2,
   ScrollText,
-  ClipboardList,
   type LucideIcon,
 } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
@@ -84,12 +83,6 @@ const content: Record<Role, { subtitle: string; actions: Action[] }> = {
         description: "Manage Doctors Availability",
         href: "/doctors",
         icon: Stethoscope,
-      },
-      {
-        label: "Patients",
-        description: "Manage Patient Records",
-        href: "/patients",
-        icon: Users,
       },
     ],
   },

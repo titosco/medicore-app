@@ -57,7 +57,6 @@ export const navByRole: Record<Role, navItem[]> = {
     dashboard,
     { label: "Appointments", href: "appointments", icon: CalendarDays },
     { label: "Doctors", href: "/doctors", icon: Stethoscope },
-    { label: "Patients", href: "/patients", icon: Users },
     notifications,
     profile,
   ],
